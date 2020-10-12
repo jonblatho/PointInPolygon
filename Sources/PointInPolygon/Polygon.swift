@@ -3,10 +3,16 @@ public class Polygon {
     /// The points that form the polygon.
     public var points: [Point]
     
+    /**
+     Initializes a polygon from an array of `Point` objects.
+     
+     - parameter points: An array of `Point` objects containing the polygon's points.
+     */
     public init(points: [Point]) {
         self.points = points
     }
     
+    /// An intersection point.
     internal typealias Intersection = Point
     
     /// The line segments that make up the polygon.
