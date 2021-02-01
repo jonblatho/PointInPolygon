@@ -1,4 +1,5 @@
-import Foundation
+#if canImport(CoreGraphics)
+import CoreGraphics
 
 extension Polygon {
     /**
@@ -14,3 +15,4 @@ extension Polygon {
         self.init(points: points)
     }
 }
+#endif
