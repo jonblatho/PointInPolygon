@@ -10,6 +10,9 @@ public class Polygon {
      */
     public init(points: [Point]) {
         self.points = points
+        if let firstPoint = points.first, let lastPoint = points.last, firstPoint != lastPoint {
+            self.points.append(firstPoint)
+        }
     }
     
     /// An intersection point.
