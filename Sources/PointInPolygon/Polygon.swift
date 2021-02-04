@@ -19,7 +19,7 @@ public class Polygon {
     internal typealias Intersection = Point
     
     /// The line segments that make up the polygon.
-    private var lineSegments: [LineSegment] {
+    internal var lineSegments: [LineSegment] {
         var array: [LineSegment] = []
         for point in points {
             if let index = points.firstIndex(of: point) {
