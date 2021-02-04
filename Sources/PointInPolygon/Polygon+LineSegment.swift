@@ -107,7 +107,7 @@ extension Polygon {
         /// Indicates whether a ray extending rightward from the given point will intersect the line segment.
         /// - parameter point: The point from which a ray will extend rightward.
         /// - returns: If there is an intersection, the function will return the coordinates of the intersection. If not, returns nil.
-        internal func rightwardRayWillIntersect(from point: Point) -> Intersection? {
+        internal func rightwardRayIntersection(from point: Point) -> Intersection? {
             guard point.y >= yMin, point.y <= yMax else {
                 // The point is outside the vertical extent of the line segment so there will never be an intersection.
                 return nil

@@ -19,7 +19,7 @@ public class Polygon {
     internal typealias Intersection = Point
     
     /// The line segments that make up the polygon.
-    private var segments: [LineSegment] {
+    private var lineSegments: [LineSegment] {
         var array: [LineSegment] = []
         for point in points {
             if let index = points.firstIndex(of: point) {
@@ -103,8 +103,8 @@ public class Polygon {
             
             // Now we have a point inside the bounding box containing the polygon. Let's move on to the ray casting method.
             var intersections: [Intersection] = []
-            for segment in segments {
-                if let intersection = segment.rightwardRayWillIntersect(from: point) {
+            for segment in lineSegments {
+                if let intersection = segment.rightwardRayIntersection(from: point) {
                     intersections.append(intersection)
                 }
             }
