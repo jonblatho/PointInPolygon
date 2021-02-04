@@ -102,11 +102,8 @@ public class Polygon {
             }
             
             // Now we have a point inside the bounding box containing the polygon. Let's move on to the ray casting method.
-            var intersections: [Intersection] = []
-            for segment in lineSegments {
-                if let intersection = segment.rightwardRayIntersection(from: point) {
-                    intersections.append(intersection)
-                }
+            let intersections: [Intersection] = lineSegments.compactMap { segment -> Intersection? in
+                return segment.rightwardRayIntersection(from: point)
             }
             
             if intersections.unique.count % 2 == 0 {
