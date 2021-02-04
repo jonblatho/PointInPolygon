@@ -40,49 +40,9 @@ public class Polygon {
         return array
     }
     
-    /// The minimum x-value for the polygon.
-    private var xMin: Double? {
-        /// The point containing the minimum x-value for the polygon.
-        let point = self.points.min { lhs, rhs in
-            lhs.x < rhs.x
-        }
-        return point?.x
-    }
-    
-    /// The maximum x-value for the polygon.
-    private var xMax: Double? {
-        /// The point containing the maximum x-value for the polygon.
-        let point = self.points.max { lhs, rhs in
-            lhs.x < rhs.x
-        }
-        return point?.x
-    }
-    
-    /// The minimum y-value for the polygon.
-    private var yMin: Double? {
-        /// The point containing the minimum y-value for the polygon.
-        let point = self.points.min { lhs, rhs in
-            lhs.y < rhs.y
-        }
-        return point?.y
-    }
-    
-    /// The maximum y-value for the polygon.
-    private var yMax: Double? {
-        /// The point containing the maximum y-value for the polygon.
-        let point = self.points.max { lhs, rhs in
-            lhs.y < rhs.y
-        }
-        return point?.y
-    }
-    
     /// The bounding box containing the polygon.
-    private var bounds: BoundingBox? {
-        if let xMin = xMin, let xMax = xMax, let yMin = yMin, let yMax = yMax {
-            return BoundingBox(xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax)
-        } else {
-            return nil
-        }
+    internal var bounds: BoundingBox? {
+        return Polygon.BoundingBox(points: points)
     }
     
     /// Determines whether the polygon contains a given point using the ray casting method.

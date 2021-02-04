@@ -100,8 +100,8 @@ extension Polygon {
         }
         
         /// The bounding box containing the line segment.
-        private var bounds: BoundingBox {
-            return BoundingBox(xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax)
+        private var bounds: BoundingBox? {
+            return BoundingBox(points: [start, end])
         }
         
         /// Indicates whether a ray extending rightward from the given point will intersect the line segment.
