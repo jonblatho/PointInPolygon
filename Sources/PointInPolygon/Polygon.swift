@@ -66,13 +66,8 @@ public class Polygon {
                 return segment.rightwardRayIntersection(from: point)
             }
             
-            if intersections.unique.count % 2 == 0 {
-                // If the number of intersections is even, the point is outside the polygon.
-                return false
-            } else {
-                // If the number of intersections is odd, the point is inside the polygon.
-                return true
-            }
+            // If the number of intersections is even (or zero), the point is outside the polygon. Otherwise, it is inside.
+            return intersections.unique.count % 2 != 0
         } else {
             // A bounding box was unable to be generated, which implies that no points were supplied. Treat the point as outside.
             return false
