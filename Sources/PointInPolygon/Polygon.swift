@@ -10,10 +10,24 @@ public class Polygon {
      
      - parameter points: An array of `Point` objects containing the polygon's points.
      */
-    public init(points: [Point]) {
+    public convenience init(points: [Point]) {
+        self.init(points: points, holes: nil)
+    }
+    
+    /**
+     Initializes a polygon from `Point` objects, as well as `Polygon` objects which are holes in the parent polygon.
+     
+     - note: Multiple hole polygons can be nested within hole polygons, or they can all be added in a list to the parent polygon; either case will not impact the result of the `Polygon.contains(point:)` method. If a polygon's holes overlap, the intersection area of the hole polygons will be counted as falling within the polygon.
+     
+     - parameter points: An array of `Point` objects containing the polygon's points.
+     - parameter holes: An array of `Polygon` objects which are holes in the polygon.
+     */
+    public init(points: [Point], holes: [Polygon]?) {
         self.points = points
+        self.holes = holes
+        
         if let firstPoint = points.first, let lastPoint = points.last, firstPoint != lastPoint {
-            // Close the polygon if the supplied points do not form a closed polygon.
+            // Close the polygon if the supplied points do not already form a closed polygon.
             self.points.append(firstPoint)
         }
     }
@@ -24,6 +38,7 @@ public class Polygon {
     /// The line segments that make up the polygon.
     internal var lineSegments: [LineSegment] {
         var array: [LineSegment] = []
+        // Form the line segments of the parent polygon
         for index in points.indices {
             if index < points.count.advanced(by: -1) {
                 let startPoint = points[index]
@@ -32,6 +47,14 @@ public class Polygon {
                 array.append(line)
             }
         }
+        
+        // Recursively add line segments from hole polygons
+        if let holes = holes {
+            for polygon in holes {
+                array.append(contentsOf: polygon.lineSegments)
+            }
+        }
+        
         return array
     }
     
