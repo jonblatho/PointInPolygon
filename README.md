@@ -5,7 +5,7 @@ A Swift package to determine whether a point is within a polygon in a two-dimens
 ### Swift Package Manager (recommended)
 For fellow Swift packages, add the following to your Package.swift file:
 
-    .package(url: "https://github.com/jonblatho/PointInPolygon.git", from: "1.0.0")
+    .package(url: "https://github.com/jonblatho/PointInPolygon.git", from: "1.1.0")
     
 Or if you're using Xcode's Swift Package Manager integration to add the package to an app or other project, add the package repository URL: https://github.com/jonblatho/PointInPolygon.git.
 
@@ -13,6 +13,13 @@ Or if you're using Xcode's Swift Package Manager integration to add the package 
 I don't recommend it, but you can copy the source files out of the Sources/PointInPolygon directory and include them in your project.
 
 ## How it works
-Points are determined to be in a polygon by casting a rightward ray from the point and counting the number of intersections with the line segments comprising the polygon's boundary. If the number of intersections is odd, the point is inside the polygon. Otherwise, it is outside the polygon. This should work for simple polygons and polygons that intersect themselves. Polygons with holes are not currently supported.
+Points are determined to be in a polygon by casting a rightward ray from the point and counting the number of intersections with the line segments comprising the polygon's boundary. If the number of intersections is odd, the point is inside the polygon. Otherwise, it is outside the polygon.
 
-Use a `Point` object to store two-dimensional coordinates, and initialize a polygon with an array of `Point` objects with all vertices of the polygon. There's also a convenience init available for an array of `CGPoint` objects.
+Use the `Point` type to store two-dimensional coordinates. There are two inits available for the `Polygon` type:
+
+* `Polygon(points:holes:)` initializes a polygon with an array of points and (optionally) hole polygons.
+* `Polygon(cgPoints:holes:)` initializes a polygon with an array of `CGPoint`s and (optionally) hole polygons.
+
+### Notes on hole polygons
+* You can nest holes within multiple levels of polygons or add them all to the list in the “parent” polygon. Either case will not impact the result of `Polygon.contains(point:)`. 
+* If two hole polygons overlap, the intersection area will be considered part of the polygon. If there is a hole in the intersection area, it will *not* be considered part of the polygon.
