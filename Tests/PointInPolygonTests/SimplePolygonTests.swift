@@ -8,7 +8,6 @@ final class SimplePolygonTests: XCTestCase {
     
     func testSquareLineSegments() {
         // The square should have four line segments; verify that they are correct.
-        print(square.lineSegments)
         XCTAssertEqual(square.lineSegments.count, 4)
         XCTAssert(square.lineSegments.contains(PointInPolygon.Polygon.LineSegment(start: Point(x: 0, y: 0), end: Point(x: 1, y: 0))))
         XCTAssert(square.lineSegments.contains(PointInPolygon.Polygon.LineSegment(start: Point(x: 1, y: 0), end: Point(x: 1, y: 1))))

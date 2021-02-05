@@ -2,6 +2,8 @@
 public class Polygon {
     /// The points that form the polygon.
     public var points: [Point]
+    /// Additional polygons which are holes in the polygon.
+    public var holes: [Polygon]? = nil
     
     /**
      Initializes a polygon from an array of `Point` objects.
@@ -39,7 +41,6 @@ public class Polygon {
     }
     
     /// Determines whether the polygon contains a given point using the ray casting method.
-    /// - warning: This does not work correctly if the polygon crosses itself.
     /// - parameter point: The point of interest.
     /// - returns: A boolean indicating whether or not the requested point is inside the polygon.
     public func contains(point: Point) -> Bool {
@@ -54,7 +55,7 @@ public class Polygon {
                 return false
             }
             
-            // If the point lies on any line segment, the point does not contain the polygon.
+            // If the point lies on any line segment, the polygon does not contain the point.
             if lineSegments.filter({ segment -> Bool in return segment.pointIsOnSegment(point: point) }).count > 0 {
                 return false
             }

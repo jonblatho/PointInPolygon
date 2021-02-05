@@ -114,9 +114,9 @@ extension Polygon {
             if let bounds = bounds, bounds.contains(point) {
                 switch type {
                 case .vertical:
-                    return point.y == yMin
-                case .horizontal:
                     return point.x == xMin
+                case .horizontal:
+                    return point.y == yMin
                 case .sloped:
                     return point.x == horizontalIntercept(for: point)
                 }
