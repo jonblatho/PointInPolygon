@@ -96,4 +96,20 @@ public class Polygon {
             return false
         }
     }
+    
+    /**
+     Determines whether a point lies on any of the line segments that form the polygon's boundary.
+     
+     - parameter point: The point of interest.
+     - returns: A boolean indicating whether or not the requested point lies on the polygon's boundary.
+     */
+    public func pointIsOnBoundary(point: Point) -> Bool {
+        if lineSegments.filter({ segment -> Bool in segment.pointIsOnSegment(point: point) }).count > 0 {
+            // The point lies on a line segment.
+            return true
+        } else {
+            // The point does not lie on any line segment.
+            return false
+        }
+    }
 }
