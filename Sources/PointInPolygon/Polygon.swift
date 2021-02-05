@@ -11,6 +11,7 @@ public class Polygon {
     public init(points: [Point]) {
         self.points = points
         if let firstPoint = points.first, let lastPoint = points.last, firstPoint != lastPoint {
+            // Close the polygon if the supplied points do not form a closed polygon.
             self.points.append(firstPoint)
         }
     }
@@ -21,20 +22,12 @@ public class Polygon {
     /// The line segments that make up the polygon.
     internal var lineSegments: [LineSegment] {
         var array: [LineSegment] = []
-        for point in points {
-            if let index = points.firstIndex(of: point) {
+        for index in points.indices {
+            if index < points.count.advanced(by: -1) {
                 let startPoint = points[index]
-                if index.advanced(by: 1) == points.count {
-                    if let first = points.first {
-                        let endPoint = first
-                        let line = LineSegment(start: startPoint, end: endPoint)
-                        array.append(line)
-                    }
-                } else {
-                    let endPoint = points[index.advanced(by: 1)]
-                    let line = LineSegment(start: startPoint, end: endPoint)
-                    array.append(line)
-                }
+                let endPoint = points[index.advanced(by: 1)]
+                let line = LineSegment(start: startPoint, end: endPoint)
+                array.append(line)
             }
         }
         return array
@@ -61,13 +54,19 @@ public class Polygon {
                 return false
             }
             
-            // Now we have a point inside the bounding box containing the polygon. Let's move on to the ray casting method.
+            // If the point lies on any line segment, the point does not contain the polygon.
+            if lineSegments.filter({ segment -> Bool in return segment.pointIsOnSegment(point: point) }).count > 0 {
+                return false
+            }
+            
+            // The point is inside the bounding box containing the polygon and does not lie on its boundary.
+            // Now try ray casting.
             let intersections: [Intersection] = lineSegments.compactMap { segment -> Intersection? in
                 return segment.rightwardRayIntersection(from: point)
             }
             
             // If the number of intersections is even (or zero), the point is outside the polygon. Otherwise, it is inside.
-            return intersections.unique.count % 2 != 0
+            return intersections.count % 2 != 0
         } else {
             // A bounding box was unable to be generated, which implies that no points were supplied. Treat the point as outside.
             return false

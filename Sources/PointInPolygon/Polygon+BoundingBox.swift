@@ -23,11 +23,7 @@ extension Polygon {
             if let xMin = points.min(by: { lhs, rhs in lhs.x < rhs.x }),
                let xMax = points.max(by: { lhs, rhs in lhs.x < rhs.x }),
                let yMin = points.min(by: { lhs, rhs in lhs.y < rhs.y }),
-               let yMax = points.max(by: { lhs, rhs in lhs.y < rhs.y }) {
-                guard xMin != xMax, yMin != yMax else {
-                    return nil
-                }
-                
+               let yMax = points.max(by: { lhs, rhs in lhs.y < rhs.y }) {                
                 self.xMin = xMin.x
                 self.xMax = xMax.x
                 self.yMin = yMin.y

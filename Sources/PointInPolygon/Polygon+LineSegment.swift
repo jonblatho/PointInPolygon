@@ -104,6 +104,27 @@ extension Polygon {
             return BoundingBox(points: [start, end])
         }
         
+        /**
+         Whether the given point lies on the line segment.
+         
+         - parameter point: The `Point` object to check against the line segment.
+         - returns: A Boolean indicating whether the point lies on the line segment.
+         */
+        internal func pointIsOnSegment(point: Point) -> Bool {
+            if let bounds = bounds, bounds.contains(point) {
+                switch type {
+                case .vertical:
+                    return point.y == yMin
+                case .horizontal:
+                    return point.x == xMin
+                case .sloped:
+                    return point.x == horizontalIntercept(for: point)
+                }
+            } else {
+                return false
+            }
+        }
+        
         /// Indicates whether a ray extending rightward from the given point will intersect the line segment.
         /// - parameter point: The point from which a ray will extend rightward.
         /// - returns: If there is an intersection, the function will return the coordinates of the intersection. If not, returns nil.
@@ -125,8 +146,7 @@ extension Polygon {
             case .sloped:
                 // Determine whether the intercept of a line extending horizontally from the point happens to the left or right of the point.
                 if let intercept = horizontalIntercept(for: point) {
-                    if intercept < point.x {
-                        // If the
+                    if intercept <= point.x {
                         return nil
                     } else {
                         return Intersection(x: intercept, y: point.y)
