@@ -7,12 +7,12 @@ extension Polygon {
      
      - parameter cgPoints: An array of `CGPoint` objects containing the polygon's points.
      */
-    public convenience init(cgPoints: [CGPoint]) {
+    public convenience init(cgPoints: [CGPoint], holes: [Polygon]? = nil) {
         let points: [Point] = cgPoints.map { (cgPoint) -> Point in
             Point(x: Double(cgPoint.x), y: Double(cgPoint.y))
         }
         
-        self.init(points: points)
+        self.init(points: points, holes: holes)
     }
 }
 #endif

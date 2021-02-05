@@ -6,15 +6,6 @@ public class Polygon {
     public var holes: [Polygon]? = nil
     
     /**
-     Initializes a polygon from an array of `Point` objects.
-     
-     - parameter points: An array of `Point` objects containing the polygon's points.
-     */
-    public convenience init(points: [Point]) {
-        self.init(points: points, holes: nil)
-    }
-    
-    /**
      Initializes a polygon from `Point` objects, as well as `Polygon` objects which are holes in the parent polygon.
      
      - note: Multiple hole polygons can be nested within hole polygons, or they can all be added in a list to the parent polygon; either case will not impact the result of the `Polygon.contains(point:)` method. If a polygon's holes overlap, the intersection area of the hole polygons will be counted as falling within the polygon.
@@ -22,7 +13,7 @@ public class Polygon {
      - parameter points: An array of `Point` objects containing the polygon's points.
      - parameter holes: An array of `Polygon` objects which are holes in the polygon.
      */
-    public init(points: [Point], holes: [Polygon]?) {
+    public init(points: [Point], holes: [Polygon]? = nil) {
         self.points = points
         self.holes = holes
         
