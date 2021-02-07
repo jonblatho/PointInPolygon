@@ -54,36 +54,63 @@ public class Polygon {
         return Polygon.BoundingBox(points: points)
     }
     
-    /// Determines whether the polygon contains a given point using the ray casting method.
-    /// - parameter point: The point of interest.
-    /// - returns: A boolean indicating whether or not the requested point is inside the polygon.
-    public func contains(point: Point) -> Bool {
+    /**
+     Determines whether the given point is inside the polygon, on its boundary, or neither.
+     
+     - parameter point: The point of interest.
+     - returns: A case of `Polygon.ContainsPointResult` which describes whether the
+     */
+    public func containsPoint(_ point: Point) -> ContainsPointResult {
         guard self.points.unique.count >= 3 else {
             // With fewer than 3 unique points, we do not have an evaluable polygon.
-            return false
+            return .invalidPolygon
         }
         
-        if let bounds = bounds {
-            guard bounds.contains(point) else {
-                // The point is outside the bounding box containing the polygon, so it is definitely outside the polygon.
-                return false
+        guard let bounds = bounds else {
+            // A bounding box could not be generated, implying an invalid polygon.
+            return .invalidPolygon
+        }
+        
+        guard bounds.contains(point) else {
+            // The point is outside the bounding box containing the polygon, so it is definitely outside the polygon.
+            return .pointOutside
+        }
+        
+        for segment in lineSegments {
+            if segment.pointIsOnSegment(point: point) {
+                // If the point is on any line segment, the polygon does not contain the point.
+                return .pointOnBoundary
             }
-            
-            // If the point lies on any line segment, the polygon does not contain the point.
-            if lineSegments.filter({ segment -> Bool in return segment.pointIsOnSegment(point: point) }).count > 0 {
-                return false
-            }
-            
-            // The point is inside the bounding box containing the polygon and does not lie on its boundary.
-            // Now try ray casting.
-            let intersections: [Intersection] = lineSegments.compactMap { segment -> Intersection? in
-                return segment.rightwardRayIntersection(from: point)
-            }
-            
-            // If the number of intersections is even (or zero), the point is outside the polygon. Otherwise, it is inside.
-            return intersections.count % 2 != 0
+        }
+        
+        // The point is inside the bounding box containing the polygon and does not lie on its boundary.
+        // Now try ray casting.
+        let intersections: [Intersection] = lineSegments.compactMap { segment -> Intersection? in
+            return segment.rightwardRayIntersection(from: point)
+        }
+        
+        // If the number of intersections is even (or zero), the point is outside the polygon. Otherwise, it is inside.
+        if intersections.count % 2 != 0 {
+            return .pointInside
         } else {
-            // A bounding box was unable to be generated, which implies that no points were supplied. Treat the point as outside.
+            return .pointOutside
+        }
+    }
+    
+    /**
+     Determines whether the polygon contains a given point using the ray casting method.
+     
+     - warning:
+     This method is deprecated and will be removed in a future release. Instead, use `Polygon.containsPoint(_point:)`, which will return `ContainsPointResult.pointInside` where this method would return `true`.
+     
+     - parameter point: The point of interest.
+     - returns: A boolean indicating whether or not the requested point is inside the polygon.
+    */
+    @available(*, deprecated, renamed: "containsPoint")
+    public func contains(point: Point) -> Bool {
+        if containsPoint(point) == .pointInside {
+            return true
+        } else {
             return false
         }
     }
@@ -91,15 +118,17 @@ public class Polygon {
     /**
      Determines whether a point lies on any of the line segments that form the polygon's boundary.
      
+     - warning:
+     This method is deprecated and will be removed in a future release. Instead, use `Polygon.containsPoint(_point:)`, which will return `ContainsPointResult.pointOnBoundary` where this method would return `true`.
+     
      - parameter point: The point of interest.
      - returns: A boolean indicating whether or not the requested point lies on the polygon's boundary.
      */
+    @available(*, deprecated, message: "Use containsPoint(point:) instead, which can return a .pointOnBoundary enum case.")
     public func pointIsOnBoundary(point: Point) -> Bool {
-        if lineSegments.filter({ segment -> Bool in segment.pointIsOnSegment(point: point) }).count > 0 {
-            // The point lies on a line segment.
+        if containsPoint(point) == .pointOnBoundary {
             return true
         } else {
-            // The point does not lie on any line segment.
             return false
         }
     }

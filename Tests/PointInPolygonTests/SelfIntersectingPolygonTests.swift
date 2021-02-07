@@ -16,29 +16,29 @@ final class SelfIntersectingPolygonTests: XCTestCase {
     
     func testContainsPointsInsidePolygon() {
         // These points should be inside the polygon.
-        XCTAssertTrue(polygon.contains(point: Point(x: 0.5, y: 0.25)))
-        XCTAssertTrue(polygon.contains(point: Point(x: 0.5, y: 0.75)))
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.5, y: 0.25)), .pointInside)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.5, y: 0.75)), .pointInside)
     }
     
     func testContainsBoundaryPoints() {
         // These points should be on the boundary of the polygon.
-        XCTAssertFalse(polygon.contains(point: Point(x: 0, y: 0)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0, y: 1)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.25, y: 0.25)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.25, y: 0.75)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.5, y: 0)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.5, y: 0.5)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.5, y: 1)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.75, y: 0.25)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.75, y: 0.75)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 1, y: 0)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 1, y: 1)))
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0, y: 0)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0, y: 1)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.25, y: 0.25)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.25, y: 0.75)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.5, y: 0)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.5, y: 0.5)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.5, y: 1)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.75, y: 0.25)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.75, y: 0.75)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 1, y: 0)), .pointOnBoundary)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 1, y: 1)), .pointOnBoundary)
     }
     
     func testContainsPointsInsideBoundingBoxOutsidePolygon() {
         // These points should be inside the polygon's bounding box but outside the polygon.
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.25, y: 0.5)))
-        XCTAssertFalse(polygon.contains(point: Point(x: 0.75, y: 0.5)))
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.25, y: 0.5)), .pointOutside)
+        XCTAssertEqual(polygon.containsPoint(Point(x: 0.75, y: 0.5)), .pointOutside)
     }
 
     static var allTests = [

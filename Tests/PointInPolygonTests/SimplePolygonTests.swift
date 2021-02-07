@@ -38,64 +38,64 @@ final class SimplePolygonTests: XCTestCase {
     func testContainsPointsInsidePolygons() {
         // These points should be inside both polygons.
         for polygon in [square, triangle] {
-            XCTAssertTrue(polygon.contains(point: Point(x: 0.5, y: 0.25)))
-            XCTAssertTrue(polygon.contains(point: Point(x: 0.75, y: 0.25)))
-            XCTAssertTrue(polygon.contains(point: Point(x: 0.75, y: 0.5)))
+            XCTAssertEqual(polygon.containsPoint(Point(x: 0.5, y: 0.25)), .pointInside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 0.75, y: 0.25)), .pointInside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 0.75, y: 0.5)), .pointInside)
         }
         // These points should be inside the square.
-        XCTAssertTrue(square.contains(point: Point(x: 0.25, y: 0.25)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.25, y: 0.5)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.25, y: 0.75)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.5, y: 0.25)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.5, y: 0.5)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.5, y: 0.75)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.75, y: 0.25)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.75, y: 0.5)))
-        XCTAssertTrue(square.contains(point: Point(x: 0.75, y: 0.75)))
+        XCTAssertEqual(square.containsPoint(Point(x: 0.25, y: 0.25)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.25, y: 0.5)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.25, y: 0.75)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.5, y: 0.25)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.5, y: 0.5)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.5, y: 0.75)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.75, y: 0.25)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.75, y: 0.5)), .pointInside)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.75, y: 0.75)), .pointInside)
     }
     
     func testContainsBoundaryPoints() {
         // These points should be on the boundaries of both polygons.
         for polygon in [square, triangle] {
-            XCTAssertFalse(polygon.contains(point: Point(x: 0, y: 0)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 0.5, y: 0)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 1, y: 0)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 1, y: 0.5)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 1, y: 1)))
+            XCTAssertEqual(polygon.containsPoint(Point(x: 0, y: 0)), .pointOnBoundary)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 0.5, y: 0)), .pointOnBoundary)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 1, y: 0)), .pointOnBoundary)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 1, y: 0.5)), .pointOnBoundary)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 1, y: 1)), .pointOnBoundary)
         }
         // These points should be on the boundary of the square.
-        XCTAssertFalse(square.contains(point: Point(x: 0, y: 0.5)))
-        XCTAssertFalse(square.contains(point: Point(x: 0, y: 1)))
-        XCTAssertFalse(square.contains(point: Point(x: 0.5, y: 1)))
+        XCTAssertEqual(square.containsPoint(Point(x: 0, y: 0.5)), .pointOnBoundary)
+        XCTAssertEqual(square.containsPoint(Point(x: 0, y: 1)), .pointOnBoundary)
+        XCTAssertEqual(square.containsPoint(Point(x: 0.5, y: 1)), .pointOnBoundary)
         // These points should be on the boundary of the triangle.
-        XCTAssertFalse(triangle.contains(point: Point(x: 0.25, y: 0.25)))
-        XCTAssertFalse(triangle.contains(point: Point(x: 0.5, y: 0.5)))
-        XCTAssertFalse(triangle.contains(point: Point(x: 0.75, y: 0.75)))
+        XCTAssertEqual(triangle.containsPoint(Point(x: 0.25, y: 0.25)), .pointOnBoundary)
+        XCTAssertEqual(triangle.containsPoint(Point(x: 0.5, y: 0.5)), .pointOnBoundary)
+        XCTAssertEqual(triangle.containsPoint(Point(x: 0.75, y: 0.75)), .pointOnBoundary)
     }
     
     func testContainsPointsOutsideBoundingBoxAndPolygon() {
         // These points should outside both the bounding box and the polygon for both the square and triangle.
         for polygon in [square, triangle] {
-            XCTAssertFalse(polygon.contains(point: Point(x: -1, y: -1)))
-            XCTAssertFalse(polygon.contains(point: Point(x: -1, y: 0)))
-            XCTAssertFalse(polygon.contains(point: Point(x: -1, y: 0.5)))
-            XCTAssertFalse(polygon.contains(point: Point(x: -1, y: 1)))
-            XCTAssertFalse(polygon.contains(point: Point(x: -1, y: 2)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 0, y: -1)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 0, y: 2)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 2, y: -1)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 2, y: 0)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 2, y: 0.5)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 2, y: 1)))
-            XCTAssertFalse(polygon.contains(point: Point(x: 2, y: 2)))
+            XCTAssertEqual(polygon.containsPoint(Point(x: -1, y: -1)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: -1, y: 0)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: -1, y: 0.5)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: -1, y: 1)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: -1, y: 2)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 0, y: -1)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 0, y: 2)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 2, y: -1)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 2, y: 0)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 2, y: 0.5)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 2, y: 1)), .pointOutside)
+            XCTAssertEqual(polygon.containsPoint(Point(x: 2, y: 2)), .pointOutside)
         }
     }
     
     func testContainsPointInsideBoundingBoxOutsidePolygon() {
         // These points should be inside the triangle's bounding box but outside the triangle.
-        XCTAssertFalse(triangle.contains(point: Point(x: 0.25, y: 0.5)))
-        XCTAssertFalse(triangle.contains(point: Point(x: 0.25, y: 0.75)))
-        XCTAssertFalse(triangle.contains(point: Point(x: 0.5, y: 0.75)))
+        XCTAssertEqual(triangle.containsPoint(Point(x: 0.25, y: 0.5)), .pointOutside)
+        XCTAssertEqual(triangle.containsPoint(Point(x: 0.25, y: 0.75)), .pointOutside)
+        XCTAssertEqual(triangle.containsPoint(Point(x: 0.5, y: 0.75)), .pointOutside)
     }
 
     static var allTests = [
