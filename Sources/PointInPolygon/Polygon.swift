@@ -58,7 +58,7 @@ public class Polygon {
      Determines whether the given point is inside the polygon, on its boundary, or neither.
      
      - parameter point: The point of interest.
-     - returns: A case of `Polygon.ContainsPointResult` which describes whether the
+     - returns: A case of `Polygon.ContainsPointResult` which describes whether the point is inside or on the boundary of the polygon.
      */
     public func containsPoint(_ point: Point) -> ContainsPointResult {
         guard self.points.unique.count >= 3 else {
