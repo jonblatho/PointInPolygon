@@ -3,7 +3,7 @@ public class Polygon {
     /// The points that form the polygon.
     public var points: [Point]
     /// Additional polygons which are holes in the polygon.
-    public var holes: [Polygon]? = nil
+    public var holes: [Polygon] = []
     
     /**
      Initializes a polygon from `Point` objects, as well as `Polygon` objects which are holes in the parent polygon.
@@ -13,7 +13,7 @@ public class Polygon {
      - parameter points: An array of `Point` objects containing the polygon's points.
      - parameter holes: An array of `Polygon` objects which are holes in the polygon.
      */
-    public init(points: [Point], holes: [Polygon]? = nil) {
+    public init(points: [Point], holes: [Polygon] = []) {
         self.points = points
         self.holes = holes
         
@@ -40,10 +40,8 @@ public class Polygon {
         }
         
         // Recursively add line segments from hole polygons
-        if let holes = holes {
-            for polygon in holes {
-                array.append(contentsOf: polygon.lineSegments)
-            }
+        for polygon in holes {
+            array.append(contentsOf: polygon.lineSegments)
         }
         
         return array
