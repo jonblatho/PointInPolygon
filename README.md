@@ -30,5 +30,5 @@ Then, use `Polygon.containsPoint(_point:)` to check whether a polygon contains a
 * `.invalidPolygon`: The supplied polygon was not evaluable (e.g., too few points).
 
 ### Notes on hole polygons
-* You can nest holes within multiple levels of polygons or add them all to the list in the “parent” polygon. Either case will not impact the result of `Polygon.contains(point:)`. 
-* If two hole polygons overlap, the intersection area will be considered part of the polygon. If there is a hole in the intersection area, it will *not* be considered part of the polygon.
+* You can nest holes within multiple levels of polygons or add them all to the list in the “parent” polygon. Either case will not impact the result of `Polygon.containsPoint(_point:)`. 
+* If two hole polygons overlap, the intersection area will be considered part of the polygon; if there is a hole in the intersection area, it will *not* be considered part of the polygon…and so on.
