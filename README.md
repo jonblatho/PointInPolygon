@@ -5,7 +5,7 @@ A Swift package to determine whether a point is within a polygon in a two-dimens
 ### Swift Package Manager (recommended)
 For fellow Swift packages, add the following to your Package.swift file:
 
-    .package(url: "https://github.com/jonblatho/PointInPolygon.git", from: "1.2.0")
+    .package(url: "https://github.com/jonblatho/PointInPolygon.git", from: "2.0.0")
     
 Or if you're using Xcode's Swift Package Manager integration to add the package to an app or other project, add the package repository URL: https://github.com/jonblatho/PointInPolygon.git.
 
@@ -17,8 +17,10 @@ Points are determined to be in a polygon by casting a rightward ray from the poi
 
 Use the `Point` type to store two-dimensional coordinates. There are two inits available for the `Polygon` type:
 
-* `Polygon(points:holes:)` initializes a polygon with an array of points and (optionally) hole polygons.
-* `Polygon(cgPoints:holes:)` initializes a polygon with an array of `CGPoint`s and (optionally) hole polygons.
+* `Polygon(points:holes:)` initializes a polygon with an array of points and any hole polygons.
+* `Polygon(cgPoints:holes:)` initializes a polygon with an array of `CGPoint`s and any hole polygons. This init is only available on platforms which can import Core Graphics (i.e., Apple platforms).
+
+By default for both inits, `holes: [Polygon] = []`.
 
 Then, use `Polygon.containsPoint(_point:)` to check whether a polygon contains a point, or whether that point lies on the polygon’s boundary. This method returns one of the following enum types:
 
