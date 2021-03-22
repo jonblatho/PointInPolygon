@@ -6,4 +6,9 @@ public struct Point: Hashable {
     public var x: Double
     /// The y-coordinate of the point.
     public var y: Double
+    
+    public init(x: Double, y: Double) {
+        self.x = x
+        self.y = y
+    }
 }
