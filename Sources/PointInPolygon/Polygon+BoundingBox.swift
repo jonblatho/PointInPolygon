@@ -9,7 +9,7 @@ extension Polygon {
         internal var yMin: Double
         /// The maximum y-value for the bounding box.
         internal var yMax: Double
-        
+
         /**
          Initializes a `BoundingBox` instance for a bounding box which
          contains an array of points. If a bounding box cannot be generated
@@ -23,7 +23,7 @@ extension Polygon {
             if let xMin = points.min(by: { lhs, rhs in lhs.x < rhs.x }),
                let xMax = points.max(by: { lhs, rhs in lhs.x < rhs.x }),
                let yMin = points.min(by: { lhs, rhs in lhs.y < rhs.y }),
-               let yMax = points.max(by: { lhs, rhs in lhs.y < rhs.y }) {                
+               let yMax = points.max(by: { lhs, rhs in lhs.y < rhs.y }) {
                 self.xMin = xMin.x
                 self.xMax = xMax.x
                 self.yMin = yMin.y
@@ -32,7 +32,7 @@ extension Polygon {
                 return nil
             }
         }
-        
+
         /// Indicates whether the bounding box contains a given point (inclusive of its boundary).
         /// - parameter point: The point of interest.
         /// - returns: A boolean indicating whether the point is inside the bounding box.

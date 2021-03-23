@@ -6,13 +6,13 @@ let package = Package(
     products: [
         .library(
             name: "PointInPolygon",
-            targets: ["PointInPolygon"]),
+            targets: ["PointInPolygon"])
     ],
     targets: [
         .target(
             name: "PointInPolygon"),
         .testTarget(
             name: "PointInPolygonTests",
-            dependencies: ["PointInPolygon"]),
+            dependencies: ["PointInPolygon"])
     ]
 )

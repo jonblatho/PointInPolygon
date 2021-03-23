@@ -12,7 +12,6 @@ extension Polygon {
         let points: [Point] = cgPoints.map { (cgPoint) -> Point in
             Point(x: Double(cgPoint.x), y: Double(cgPoint.y))
         }
-        
         self.init(points: points, holes: holes)
     }
 }
