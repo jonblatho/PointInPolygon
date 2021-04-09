@@ -1,4 +1,7 @@
 # PointInPolygon
+![Build Status](https://img.shields.io/github/workflow/status/jonblatho/PointInPolygon/Tests?style=flat-square) ![Codecov](https://img.shields.io/codecov/c/github/jonblatho/PointInPolygon?style=flat-square)
+
+
 A Swift package to determine whether a point is within a polygon in a two-dimensional Cartesian coordinate system.
 
 ## Installation
