@@ -39,9 +39,8 @@ extension Polygon {
         internal func contains(_ point: Point) -> Bool {
             if point.x >= xMin, point.x <= xMax, point.y >= yMin, point.y <= yMax {
                 return true
-            } else {
-                return false
             }
+            return false
         }
     }
 }

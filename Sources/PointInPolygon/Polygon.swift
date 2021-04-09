@@ -65,13 +65,13 @@ public class Polygon {
      whether the point is inside or on the boundary of the polygon.
      */
     public func containsPoint(_ point: Point) -> ContainsPointResult {
-        guard self.points.unique.count >= 3 else {
-            // With fewer than 3 unique points, we do not have an evaluable polygon.
-            return .invalidPolygon
-        }
-
         guard let bounds = bounds else {
             // A bounding box could not be generated, implying an invalid polygon.
+            return .invalidPolygon
+        }
+        
+        guard self.points.unique.count >= 3 else {
+            // With fewer than 3 unique points, we do not have an evaluable polygon.
             return .invalidPolygon
         }
 
@@ -96,8 +96,7 @@ public class Polygon {
         // If the number of intersections is even (or zero), the point is outside the polygon. Otherwise, it is inside.
         if intersections.count % 2 != 0 {
             return .pointInside
-        } else {
-            return .pointOutside
         }
+        return .pointOutside
     }
 }

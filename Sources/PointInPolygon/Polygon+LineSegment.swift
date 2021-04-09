@@ -8,55 +8,37 @@ extension Polygon {
 
         /// Indicates whether the line is horizontal, vertical, or neither.
         private var type: LineType {
-            if yMax == yMin {
+            if start.y == end.y {
                 return .horizontal
-            } else {
-                if xMax == xMin {
-                    return .vertical
-                } else {
-                    return .sloped
-                }
             }
+            if start.x == end.x {
+                return .vertical
+            }
+            return .sloped
         }
 
         /// The minimum x-value in the line segment.
         private var xMin: Double {
-            if start.x < end.x {
-                return start.x
-            } else {
-                return end.x
-            }
+            return [start.x, end.x].min()!
         }
 
         /// The maximum x-value in the line segment.
         private var xMax: Double {
-            if start.x > end.x {
-                return start.x
-            } else {
-                return end.x
-            }
+            return [start.x, end.x].max()!
         }
 
         /// The minimum y-value in the line segment.
         private var yMin: Double {
-            if start.y < end.y {
-                return start.y
-            } else {
-                return end.y
-            }
+            return [start.y, end.y].min()!
         }
 
         /// The maximum y-value in the line segment.
         private var yMax: Double {
-            if start.y > end.y {
-                return start.y
-            } else {
-                return end.y
-            }
+            return [start.y, end.y].max()!
         }
 
         /// The slope of the line segment.
-        private var slope: Double? {
+        internal var slope: Double? {
             switch type {
             case .horizontal:
                 return 0
@@ -72,21 +54,21 @@ extension Polygon {
         }
 
         /// The y-value along the line containing the line segment associated with x = 0.
-        private var yAxisIntercept: Double? {
+        internal var yAxisIntercept: Double? {
             if let slope = slope {
                 return start.y - slope * start.x
-            } else {
-                return nil
             }
+            return nil
         }
 
         /// Determines the x-value at which a horizontal line through a given point would intercept the line segment.
-        private func horizontalIntercept(for point: Point) -> Double? {
+        internal func horizontalIntercept(for point: Point) -> Double? {
             if let slope = slope, let yAxisIntercept = yAxisIntercept, slope != 0 {
                 return (point.y - yAxisIntercept) / slope
-            } else {
-                return nil
+            } else if yAxisIntercept == nil {
+                return point.y
             }
+            return nil
         }
 
         /// The bounding box containing the line segment.
@@ -110,9 +92,8 @@ extension Polygon {
                 case .sloped:
                     return point.x == horizontalIntercept(for: point)
                 }
-            } else {
-                return false
             }
+            return false
         }
 
         /**
@@ -140,15 +121,10 @@ extension Polygon {
             case .sloped:
                 // Determine whether the intercept of a line extending horizontally
                 // from the point happens to the left or right of the point.
-                if let intercept = horizontalIntercept(for: point) {
-                    if intercept <= point.x {
-                        return nil
-                    } else {
-                        return Intersection(x: intercept, y: point.y)
-                    }
-                } else {
-                    return nil
+                if let intercept = horizontalIntercept(for: point), intercept > point.x {
+                    return Intersection(x: intercept, y: point.y)
                 }
+                return nil
             }
         }
     }
