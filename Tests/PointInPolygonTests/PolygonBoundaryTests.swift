@@ -14,8 +14,4 @@ final class PolygonBoundaryTests: XCTestCase {
         XCTAssertEqual(triangle.containsPoint(Point(x: 0.5, y: 0.5)), .pointOnBoundary)
         XCTAssertEqual(triangle.containsPoint(Point(x: 0.75, y: 0.75)), .pointOnBoundary)
     }
-
-    static var allTests = [
-        ("testPointIsOnBoundary", testPointIsOnBoundary)
-    ]
 }

@@ -14,9 +14,5 @@ final class CGPointTests: XCTestCase {
             XCTAssertTrue(polygon.points.contains(equivalentPoint))
         }
     }
-
-    static var allTests = [
-        ("testPoints", testPoints)
-    ]
 }
 #endif

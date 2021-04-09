@@ -20,8 +20,4 @@ final class PointInPolygonTests: XCTestCase {
         XCTAssertEqual(closedPolygon.points.count, 5)
         XCTAssertEqual(closedPolygon.points.first!, closedPolygon.points.last!)
     }
-
-    static var allTests = [
-        ("testClosingPolygons", testClosingPolygons)
-    ]
 }

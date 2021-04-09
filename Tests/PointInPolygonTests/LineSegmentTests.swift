@@ -26,11 +26,4 @@ final class LineSegmentTests: XCTestCase {
         let point = Point(x: -0.5, y: 0)
         XCTAssertNil(horizontal.rightwardRayIntersection(from: point))
     }
-
-    static var allTests = [
-        ("testSlopes", testSlopes),
-        ("testYAxisIntercepts", testYAxisIntercepts),
-        ("testHorizontalIntercepts", testHorizontalIntercepts),
-        ("testRightwardRayIntersection", testRightwardRayIntersection),
-    ]
 }

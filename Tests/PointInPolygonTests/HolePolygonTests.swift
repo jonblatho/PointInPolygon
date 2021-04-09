@@ -86,11 +86,4 @@ final class HolePolygonTests: XCTestCase {
             XCTAssertEqual(polygon.containsPoint(Point(x: 4.5, y: 4.5)), .pointInside)
         }
     }
-
-    static var allTests = [
-        ("testOuterLineSegments", testOuterLineSegments),
-        ("testMiddleLineSegments", testMiddleLineSegments),
-        ("testInnerLineSegments", testInnerLineSegments),
-        ("testPointsInPolygon", testPointsInPolygon)
-    ]
 }

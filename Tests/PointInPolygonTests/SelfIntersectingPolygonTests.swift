@@ -40,11 +40,4 @@ final class SelfIntersectingPolygonTests: XCTestCase {
         XCTAssertEqual(polygon.containsPoint(Point(x: 0.25, y: 0.5)), .pointOutside)
         XCTAssertEqual(polygon.containsPoint(Point(x: 0.75, y: 0.5)), .pointOutside)
     }
-
-    static var allTests = [
-        ("testLineSegments", testLineSegments),
-        ("testContainsPointsInsidePolygon", testContainsPointsInsidePolygon),
-        ("testContainsBoundaryPoints", testContainsBoundaryPoints),
-        ("testContainsPointsInsideBoundingBoxOutsidePolygon", testContainsPointsInsideBoundingBoxOutsidePolygon)
-    ]
 }

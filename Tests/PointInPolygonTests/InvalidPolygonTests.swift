@@ -14,9 +14,4 @@ final class InvalidPolygonTests: XCTestCase {
     func testLineSegmentPolygon() {
         XCTAssertEqual(lineSegment.containsPoint(Point(x: 0, y: 0)), .invalidPolygon)
     }
-
-    static var allTests = [
-        ("testEmptyPolygon", testEmptyPolygon),
-        ("testLineSegmentPolygon", testLineSegmentPolygon),
-    ]
 }

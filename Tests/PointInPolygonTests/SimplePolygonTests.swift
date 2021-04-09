@@ -107,14 +107,4 @@ final class SimplePolygonTests: XCTestCase {
         XCTAssertEqual(triangle.containsPoint(Point(x: 0.25, y: 0.75)), .pointOutside)
         XCTAssertEqual(triangle.containsPoint(Point(x: 0.5, y: 0.75)), .pointOutside)
     }
-
-    static var allTests = [
-        ("testSquareLineSegments", testSquareLineSegments),
-        ("testTriangleLineSegments", testTriangleLineSegments),
-        ("testBoundingBox", testBoundingBox),
-        ("testContainsPointsInsidePolygons", testContainsPointsInsidePolygons),
-        ("testContainsBoundaryPoints", testContainsBoundaryPoints),
-        ("testContainsPointsOutsideBoundingBoxAndPolygon", testContainsPointsOutsideBoundingBoxAndPolygon),
-        ("testContainsPointInsideBoundingBoxOutsidePolygon", testContainsPointInsideBoundingBoxOutsidePolygon)
-    ]
 }
